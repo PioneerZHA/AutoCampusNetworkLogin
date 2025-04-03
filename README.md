@@ -1,76 +1,128 @@
-校园网自动登录工具
+# 🏫 校园网自动登录工具
 
-项目简介
-这是一个基于Python的校园网自动登录工具，使用Selenium实现浏览器自动化登录操作。主要功能包括：
-    自动检测校园网登录状态
-    智能识别校园网登录页面
-    安全保存账号密码（使用系统密钥环）
-    支持开机自启动
-    提供图形化操作界面
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.7+](https://img.shields.io/badge/Python-3.7%2B-blue.svg)](https://www.python.org/)
+[![Platform: Win/macOS/Linux](https://img.shields.io/badge/Platform-Win%20%7C%20macOS%20%7C%20Linux-lightgrey.svg)]()
 
-功能特点
-    智能检测：通过多道验证机制判断是否需要登录校园网
-    安全存储：使用系统密钥环保存密码，避免明文存储
-    跨平台支持：支持Windows、macOS和Linux系统
-    自动重试：登录失败时自动重试机制
-    日志记录：详细记录操作日志便于排查问题
+> 基于 Python + Selenium 的校园网自动化登录工具 | 安全存储账号 | 支持多平台
 
-安装要求
-    系统要求
-        Python 3.7+
-        Firefox浏览器
-        geckodriver（自动安装）
+---
 
-Python依赖
-    请创建requirements.txt文件并包含以下内容：
-        tkinter
-        selenium>=4.0.0
-        requests>=2.26.0
-        keyring>=23.0.1
-        pywin32>=300 ; sys_platform == 'win32'
-    或者直接运行：
-        pip install selenium requests keyring pywin32
+## 📖 项目简介
+通过浏览器自动化实现校园网登录，解决手动登录繁琐问题。核心功能：
+- ✅ 自动检测登录状态
+- 🔒 密码安全存储（系统密钥环）
+- 🖥️ 图形化操作界面
+- 🔄 断网自动重连
+- 📅 开机自启动
 
-使用说明
-基本使用
-    首次运行程序会显示图形界面
-    输入校园网账号和密码
-    点击"保存设置"按钮保存配置
-    点击"立即登录"按钮测试登录
+---
 
-命令行参数
-# 普通模式（显示GUI界面）
+## ✨ 功能特点
+| 特性 | 说明 |
+|------|------|
+| **智能检测** | 多道验证机制判断是否需要登录 |
+| **安全存储** | 使用系统密钥环保存密码，无明文存储 |
+| **跨平台** | Windows/macOS/Linux 全支持 |
+| **日志记录** | 详细运行日志便于排查问题 |
+
+---
+
+## 🛠️ 安装要求
+
+### 系统依赖
+- [Python 3.7+](https://www.python.org/downloads/)
+- [Firefox 浏览器](https://www.mozilla.org/firefox/)
+- `geckodriver`（自动安装）
+
+### Python 依赖
+```bash
+# 安装依赖
+pip install -r requirements.txt
+```
+
+<details>
+<summary>📜 requirements.txt 内容</summary>
+
+```text
+selenium>=4.0.0
+requests>=2.26.0
+keyring>=23.0.1
+pywin32>=300 ; sys_platform == 'win32'
+```
+</details>
+
+---
+
+## 🚀 使用指南
+
+### 图形界面模式
+```bash
 python campus_login.py
-# 自动模式（静默检测并登录）
+```
+1. 输入校园网账号密码  
+2. 点击"保存设置"  
+3. 点击"立即登录"测试  
+
+### 静默自动模式
+```bash
 python campus_login.py --auto
+```
 
-开机自启动
-在程序界面勾选"开机自动启动并自动登录"选项，程序会自动配置系统启动项。
+### 开机自启动
+勾选界面中的 `开机自动启动并自动登录` 选项
 
-配置说明
-    配置文件保存在用户目录下的.campus_login_config.json文件中，包含以下信息：
-        用户名
-        自动启动设置
-        Firefox路径
-        登录URL（自动记录）
-    注意：密码不会保存在配置文件中，而是使用系统密钥环存储。
+---
 
-技术实现
-    网络检测：通过访问多个网站检测是否被重定向到登录页
-    页面识别：智能分析网页内容判断是否为校园网登录页
-    自动登录：使用Selenium模拟浏览器操作完成登录
-    安全存储：利用系统密钥环API安全保存密码
+## ⚙️ 配置说明
+配置文件路径：`~/.campus_login_config.json`  
+```json
+{
+  "username": "学号",
+  "autostart": true,
+  "firefox_path": "/path/to/firefox",
+  "url": "https://login.example.com"
+}
+```
+> 🔒 密码通过系统密钥环存储，不会出现在配置文件中
 
-常见问题
-Q: 程序无法找到Firefox浏览器
-A: 请确保已安装Firefox浏览器，或在设置中手动指定Firefox路径
-Q: 登录失败怎么办？
-A: 检查日志查看具体错误，可能需要调整页面元素识别规则
-Q: 如何清除保存的密码？
-A: 删除配置文件(~/.campus_login_config.json)并使用系统工具清除密钥环中的密码
+---
 
-免责声明
-本工具仅供学习交流使用，请勿用于非法用途。使用者应遵守所在学校的网络使用规定，自行承担使用风险。
+## 🔍 技术实现
+```mermaid
+graph TD
+    A[启动检测] --> B{网络连通?}
+    B -->|否| C[识别登录页面]
+    C --> D[自动填写账号密码]
+    D --> E[提交登录]
+    E --> F[验证结果]
+```
 
-许可证
-MIT License
+---
+
+## ❓ 常见问题
+<details>
+<summary><b>Q: 无法找到 Firefox 浏览器？</b></summary>
+
+- 确认已安装 [Firefox](https://www.mozilla.org/firefox/)
+- 或在设置中手动指定 Firefox 路径
+</details>
+
+<details>
+<summary><b>Q: 登录失败如何调试？</b></summary>
+
+1. 检查日志文件  
+2. 尝试手动访问登录页面  
+3. 更新页面元素识别规则  
+</details>
+
+---
+
+## ⚠️ 免责声明
+*本工具仅供学习交流，使用者应遵守学校网络规定，擅自使用造成的风险自行承担。*
+
+---
+
+## 📜 许可证
+[MIT License](LICENSE) © 2025 Rubisco0326
+```
