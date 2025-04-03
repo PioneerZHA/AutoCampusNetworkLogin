@@ -1,0 +1,30 @@
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+env/
+*.egg-info/
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*.sublime-workspace
+
+# Logs
+*.log
+*.cache
+
+# Selenium
+geckodriver.log
+webdriver/
+
+# Local config
+.campus_login_config.json
