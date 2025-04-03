@@ -113,7 +113,8 @@ graph TD
 
 1. 检查日志文件  
 2. 尝试手动访问登录页面  
-3. 更新页面元素识别规则  
+3. 更新页面元素识别规则
+p.s. 对于Windows用户，配置文件默认路径为C:\Users\用户名\.campus_login_config.json
 </details>
 
 ---
